@@ -195,23 +195,23 @@
          recortado con esquinas redondeadas, y ese canvas es la textura -->
     <a-plane id="ventana"
       position="-1.05 0 0.02"
-      width="1.05" height="0.68"
+      width="2.1" height="1.36"
       rotation="0 18 0"
       material="shader: flat; transparent: true"></a-plane>
 
     <!-- marco de la ventana -->
-    <a-plane position="-1.05 0 0.01" width="1.13" height="0.76" rotation="0 18 0"
+    <a-plane position="-1.05 0 0.01" width="2.26" height="1.52" rotation="0 18 0"
       color="#0c2a17" material="shader: flat"></a-plane>
 
     <!-- PANTALLA DEL PIP-BOY (derecha del cartel) -->
     <a-plane id="pantalla-pipboy"
       position="1.05 0 0.02"
-      width="0.85" height="0.66"
+      width="1.7" height="1.32"
       rotation="0 -18 0"
       material="shader: flat; transparent: true"></a-plane>
 
     <!-- carcasa detrás de la pantalla -->
-    <a-plane position="1.05 0 0.01" width="0.95" height="0.76" rotation="0 -18 0"
+    <a-plane position="1.05 0 0.01" width="1.9" height="1.52" rotation="0 -18 0"
       color="#132a19" material="shader: flat"></a-plane>
 
   </a-entity>
@@ -544,7 +544,7 @@ function rolDe(e){
 const RADIO_VENTANA = 32;         // px de curvatura — ajustá a gusto
 const cvVentana = document.createElement('canvas');
 cvVentana.width = 400;
-cvVentana.height = 258;           // misma proporción que el a-plane (0.85 × 0.55)
+cvVentana.height = 258;           // misma proporción que el a-plane (2.1 × 1.36)
 const cxVentana = cvVentana.getContext('2d');
 
 function rutaRedondeada(ctx, w, h, r){

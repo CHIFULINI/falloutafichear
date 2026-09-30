@@ -327,6 +327,13 @@ const ROLES = {
   sue:'Hijo de la Fortuna'
 };
 
+const ROLES_COMBINADOS = [
+  {stats:['fue','res'], nombre:'Guardia del Refugio'},
+  {stats:['per','int'], nombre:'Médico de Campo'},
+  {stats:['int','agi'], nombre:'Ingeniero del Refugio'},
+  {stats:['car','sue'], nombre:'Comerciante'}
+];
+
 // paletas de color del Pip-Boy — cambian tanto los controles 2D
 // (vía variables CSS) como la pantalla 3D (vía estas constantes)
 const TEMAS = {
@@ -528,9 +535,19 @@ function actualizarTextura(){
 }
 
 function rolDe(e){
-  let mejor = STATS[0].k;
-  STATS.forEach(s=>{ if(e.stats[s.k] > e.stats[mejor]) mejor = s.k; });
-  return ROLES[mejor];
+  const ordenados = STATS.map(s=>s.k).sort((a,b)=>e.stats[b] - e.stats[a]);
+  const [primero, segundo] = ordenados;
+  const valorPrimero = e.stats[primero];
+  const valorSegundo = e.stats[segundo];
+
+  if(valorSegundo > BASE && valorPrimero - valorSegundo <= 1){
+    const combinado = ROLES_COMBINADOS.find(rol =>
+      rol.stats.includes(primero) && rol.stats.includes(segundo)
+    );
+    if(combinado) return combinado.nombre;
+  }
+
+  return ROLES[primero];
 }
 
 

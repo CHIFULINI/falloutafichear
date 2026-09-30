@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Registro del Refugio</title>
-
-<script src="https://cdn.jsdelivr.net/npm/aframe@1.8.0/dist/aframe-master.min.js"></script>
+ 
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
+ 
 <style>
   :root{
     --fosforo:#2fe664;
@@ -15,16 +15,16 @@
     --ambar:#ffb642;
     --fondo:#04120a;
   }
-
+ 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-
+ 
   html,body{
     margin:0; padding:0; overflow:hidden;
     height:100%; width:100%;
     background:#000;
     font-family:"Courier New",Courier,monospace;
   }
-
+ 
   /* ---------- CAPA 2D SOBRE LA CÁMARA ---------- */
   /* pointer-events:none deja pasar los toques a la escena AR.
      Solo los controles reales lo reactivan. */
@@ -36,7 +36,7 @@
     color:var(--fosforo);
     text-shadow:0 0 6px rgba(47,230,100,.55);
   }
-
+ 
   /* scanlines y viñeteado: pura decoración CSS, cero peso */
   #ui::before{
     content:""; position:absolute; inset:0; pointer-events:none;
@@ -53,7 +53,7 @@
     content:""; position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,.65) 100%);
   }
-
+ 
   .panel{
     pointer-events:auto;
     position:relative; z-index:2;
@@ -64,7 +64,7 @@
     box-shadow:0 0 22px rgba(47,230,100,.22), inset 0 0 32px rgba(47,230,100,.07);
     animation:flicker 4.2s infinite;
   }
-
+ 
   @keyframes flicker{
     0%,97%,100%{opacity:1}
     98%{opacity:.93}
@@ -73,7 +73,7 @@
   @media (prefers-reduced-motion:reduce){
     .panel{animation:none}
   }
-
+ 
   .panel h2{
     margin:0 0 4px;
     font-size:17px; font-weight:700; letter-spacing:.5px;
@@ -83,7 +83,7 @@
     font-size:12px; color:var(--fosforo-tenue);
     text-shadow:none; line-height:1.4;
   }
-
+ 
   /* ---------- BOTONES ---------- */
   .btn{
     font-family:inherit; font-size:15px; font-weight:700;
@@ -101,10 +101,10 @@
   .btn:focus-visible{outline:3px solid var(--ambar); outline-offset:2px;}
   .btn.secundario{border-color:var(--fosforo-tenue); color:var(--fosforo-tenue); font-size:13px; padding:10px;}
   .btn.secundario.activo{background:var(--fosforo); color:var(--fondo); text-shadow:none;}
-
+ 
   .fila{display:flex; gap:10px;}
   .fila .btn{flex:1;}
-
+ 
   /* ---------- STATS S.P.E.C.I.A.L. ---------- */
   #puntos-restantes{
     display:flex; justify-content:space-between; align-items:baseline;
@@ -112,7 +112,7 @@
     border-bottom:1px solid var(--fosforo-tenue); padding-bottom:8px;
   }
   #puntos-restantes b{font-size:22px; color:var(--ambar); text-shadow:0 0 8px rgba(255,182,66,.6);}
-
+ 
   .stat{
     display:grid; grid-template-columns:22px 1fr 34px 34px 34px;
     align-items:center; gap:8px;
@@ -136,7 +136,7 @@
   .stat button:active{background:var(--fosforo); color:var(--fondo);}
   .stat button:disabled{opacity:.25; cursor:default;}
   .stat button:focus-visible{outline:2px solid var(--ambar); outline-offset:1px;}
-
+ 
   /* ---------- MODAL DEL NOMBRE ---------- */
   /* pantalla completa: el teclado del móvil tapa la cámara igual,
      así que mejor ocultarla del todo mientras escribe */
@@ -160,7 +160,7 @@
   }
   #campo-nombre:focus{outline:none; background:rgba(47,230,100,.1);}
   #contador-nombre{font-size:11px; color:var(--fosforo-tenue); margin-bottom:24px;}
-
+ 
   /* ---------- AVISO DE BÚSQUEDA DE TARGET ---------- */
   #buscando{
     pointer-events:none; position:relative; z-index:2;
@@ -170,12 +170,12 @@
     padding:16px 22px; border-radius:4px;
   }
   #buscando .icono{font-size:30px; display:block; margin-bottom:8px;}
-
+ 
   .oculto{display:none !important;}
 </style>
 </head>
 <body>
-
+ 
 <!-- ══════════════════ ESCENA AR ══════════════════ -->
 <a-scene
   mindar-image="imageTargetSrc: ./targets.mind; filterMinCF: 0.0001; filterBeta: 0.0001; uiScanning: no; uiLoading: no;"
@@ -183,15 +183,15 @@
   renderer="colorManagement: true, physicallyCorrectLights"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false">
-
+ 
   <a-assets>
     <video id="vid-ventana" src="./refugio.mp4" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
   </a-assets>
-
+ 
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
+ 
   <a-entity id="target" mindar-image-target="targetIndex: 0">
-
+ 
     <!-- VENTANA AL REFUGIO (izquierda del cartel) -->
     <!-- es un a-plane, no a-video: el video se dibuja en un canvas
          recortado con esquinas redondeadas, y ese canvas es la textura -->
@@ -200,38 +200,38 @@
       width="0.85" height="0.55"
       rotation="0 18 0"
       material="shader: flat; transparent: true"></a-plane>
-
+ 
     <!-- marco de la ventana -->
     <a-plane position="-1.05 0 0.01" width="0.93" height="0.63" rotation="0 18 0"
       color="#0c2a17" material="shader: flat"></a-plane>
-
+ 
     <!-- PANTALLA DEL PIP-BOY (derecha del cartel) -->
     <a-plane id="pantalla-pipboy"
       position="1.05 0 0.02"
       width="0.85" height="0.66"
       rotation="0 -18 0"
       material="shader: flat; transparent: true"></a-plane>
-
+ 
     <!-- carcasa detrás de la pantalla -->
     <a-plane position="1.05 0 0.01" width="0.95" height="0.76" rotation="0 -18 0"
       color="#132a19" material="shader: flat"></a-plane>
-
+ 
   </a-entity>
 </a-scene>
-
+ 
 <!-- canvas fuera de pantalla: es la textura de la pantalla 3D -->
 <canvas id="canvas-pipboy" width="512" height="400" style="display:none"></canvas>
-
-
+ 
+ 
 <!-- ══════════════════ CAPA DE CONTROLES 2D ══════════════════ -->
 <div id="ui">
-
+ 
   <div id="buscando">
     <span class="icono">◎</span>
     Apunta la cámara al cartel<br>
     <span style="color:var(--fosforo-tenue); font-size:12px">para acceder al terminal</span>
   </div>
-
+ 
   <!-- PASO 1 · SEXO -->
   <div class="panel oculto" id="paso-sexo">
     <h2>Registro de habitante</h2>
@@ -241,7 +241,7 @@
       <button class="btn" data-sexo="F">Mujer</button>
     </div>
   </div>
-
+ 
   <!-- PASO 2 · NOMBRE -->
   <div class="panel oculto" id="paso-nombre">
     <h2>Identificación</h2>
@@ -250,7 +250,7 @@
     <div style="height:8px"></div>
     <button class="btn secundario" id="saltar-nombre">Usar designación automática</button>
   </div>
-
+ 
   <!-- PASO 3 · S.P.E.C.I.A.L. -->
   <div class="panel oculto" id="paso-special">
     <div id="puntos-restantes">
@@ -266,26 +266,26 @@
       <button class="btn secundario" id="reiniciar-stats">Reiniciar</button>
     </div>
   </div>
-
+ 
   <!-- PASO 4 · RESULTADO -->
   <div class="panel oculto" id="paso-final">
     <h2 id="titulo-final">Habitante registrado</h2>
     <p class="sub" id="texto-final"></p>
-
+ 
     <p class="sub" style="margin-bottom:8px">Color de pantalla</p>
     <div class="fila" id="selector-tema" style="margin-bottom:12px">
       <button class="btn secundario" data-tema="verde">Verde</button>
       <button class="btn secundario" data-tema="ambar">Ámbar</button>
       <button class="btn secundario" data-tema="azul">Azul</button>
     </div>
-
+ 
     <button class="btn" id="descargar-tarjeta">Descargar tarjeta</button>
     <div style="height:8px"></div>
     <button class="btn secundario" id="otro-habitante">Registrar a otra persona</button>
   </div>
-
+ 
 </div>
-
+ 
 <!-- MODAL DE NOMBRE -->
 <div id="modal-nombre">
   <label for="campo-nombre">Nombre del habitante</label>
@@ -296,14 +296,14 @@
   <div style="height:10px"></div>
   <button class="btn secundario" id="cancelar-nombre">Cancelar</button>
 </div>
-
-
+ 
+ 
 <script>
 /* ══════════════════════════════════════════════════════════
    1. ESTADO
    Un solo objeto. Todo lo que cambia en pantalla sale de acá.
    ══════════════════════════════════════════════════════════ */
-
+ 
 const STATS = [
   {k:'fue', letra:'S', nombre:'Fuerza'},
   {k:'per', letra:'P', nombre:'Percepción'},
@@ -313,11 +313,11 @@ const STATS = [
   {k:'agi', letra:'A', nombre:'Agilidad'},
   {k:'sue', letra:'L', nombre:'Suerte'}
 ];
-
+ 
 const BASE = 4;          // valor inicial de cada atributo
 const POOL = 6;          // puntos libres para repartir
 const MIN = 1, MAX = 10;
-
+ 
 // rol según el atributo más alto
 const ROLES = {
   fue:'Bruto del Yermo',
@@ -328,7 +328,7 @@ const ROLES = {
   agi:'Carroñero',
   sue:'Hijo de la Fortuna'
 };
-
+ 
 // paletas de color del Pip-Boy — cambian tanto los controles 2D
 // (vía variables CSS) como la pantalla 3D (vía estas constantes)
 const TEMAS = {
@@ -336,7 +336,7 @@ const TEMAS = {
   ambar: { fosforo:'#ffb648', tenue:'#a66c14', ambar:'#ffe9a6' },
   azul:  { fosforo:'#49c9ff', tenue:'#1f6f96', ambar:'#eafcff' }
 };
-
+ 
 let estado = {};
 function reiniciarEstado(){
   const temaPrevio = estado && estado.tema ? estado.tema : 'verde'; // se conserva entre registros
@@ -350,25 +350,25 @@ function reiniciarEstado(){
   };
 }
 reiniciarEstado();
-
+ 
 const puntosGastados = () =>
   STATS.reduce((t,s)=> t + (estado.stats[s.k] - BASE), 0);
 const puntosLibres = () => POOL - puntosGastados();
-
-
+ 
+ 
 /* ══════════════════════════════════════════════════════════
    1b. SONIDO
    Todo sintetizado con Web Audio API — cero archivos externos,
    así que no suma ni un byte al peso de la página.
    ══════════════════════════════════════════════════════════ */
-
+ 
 let audioCtx = null;
 function obtenerAudioCtx(){
   if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if(audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
-
+ 
 function pitido({freq=440, duracion=0.08, tipo='square', volumen=0.06} = {}){
   try{
     const ctx = obtenerAudioCtx();
@@ -383,7 +383,7 @@ function pitido({freq=440, duracion=0.08, tipo='square', volumen=0.06} = {}){
     osc.stop(ctx.currentTime + duracion);
   }catch(err){ /* si el navegador bloquea audio, seguimos sin sonido */ }
 }
-
+ 
 const sonido = {
   click:     () => pitido({freq:520, duracion:0.05, tipo:'square'}),
   masMenos:  () => pitido({freq:340, duracion:0.04, tipo:'square', volumen:0.045}),
@@ -394,18 +394,18 @@ const sonido = {
     setTimeout(()=>pitido({freq:660, duracion:0.08, volumen:0.06}), 120);
   }
 };
-
-
+ 
+ 
 /* ══════════════════════════════════════════════════════════
    2. LA PANTALLA 3D — canvas dibujado a mano
    Se redibuja solo cuando cambia el estado.
    ══════════════════════════════════════════════════════════ */
-
+ 
 const cv = document.getElementById('canvas-pipboy');
 const cx = cv.getContext('2d');
 let VERDE = '#2fe664', TENUE = '#1a8a3e', AMBAR = '#ffb642';
 const FONDO = '#04120a';
-
+ 
 function aplicarTema(nombreTema){
   const t = TEMAS[nombreTema];
   if(!t) return;
@@ -419,19 +419,19 @@ function aplicarTema(nombreTema){
   });
   dibujarPantalla();
 }
-
+ 
 function dibujarPantalla(){
   const W = cv.width, H = cv.height;
-
+ 
   cx.fillStyle = FONDO;
   cx.fillRect(0,0,W,H);
-
+ 
   // marco
   cx.strokeStyle = TENUE; cx.lineWidth = 3;
   cx.strokeRect(10,10,W-20,H-20);
-
+ 
   cx.textBaseline = 'top';
-
+ 
   // encabezado
   cx.fillStyle = VERDE;
   cx.font = 'bold 21px "Courier New",monospace';
@@ -439,43 +439,43 @@ function dibujarPantalla(){
   cx.font = '13px "Courier New",monospace';
   cx.fillStyle = TENUE;
   cx.fillText('REGISTRO DE HABITANTE', 28, 52);
-
+ 
   cx.strokeStyle = TENUE; cx.lineWidth = 1;
   cx.beginPath(); cx.moveTo(28,74); cx.lineTo(W-28,74); cx.stroke();
-
+ 
   // nombre + sexo
   cx.fillStyle = VERDE;
   cx.font = 'bold 26px "Courier New",monospace';
   cx.fillText(estado.nombre || '_ _ _ _ _ _', 28, 88);
-
+ 
   cx.font = '14px "Courier New",monospace';
   cx.fillStyle = TENUE;
   const sexoTxt = estado.sexo === 'M' ? 'Hombre'
                 : estado.sexo === 'F' ? 'Mujer'
                 : 'sin registrar';
   cx.fillText(sexoTxt, 28, 122);
-
+ 
   if(estado.numero){
     cx.fillStyle = AMBAR;
     cx.font = 'bold 15px "Courier New",monospace';
     cx.fillText('Nº ' + estado.numero, W-120, 122);
   }
-
+ 
   // barras de atributos
   let y = 156;
   const xLetra = 28, xNombre = 52, xBarra = 190, anchoBarra = W - 190 - 62;
-
+ 
   STATS.forEach(s=>{
     const v = estado.stats[s.k];
-
+ 
     cx.fillStyle = AMBAR;
     cx.font = 'bold 16px "Courier New",monospace';
     cx.fillText(s.letra, xLetra, y);
-
+ 
     cx.fillStyle = VERDE;
     cx.font = '14px "Courier New",monospace';
     cx.fillText(s.nombre, xNombre, y+1);
-
+ 
     // riel
     cx.strokeStyle = TENUE; cx.lineWidth = 1;
     cx.strokeRect(xBarra, y+2, anchoBarra, 13);
@@ -485,18 +485,18 @@ function dibujarPantalla(){
     for(let i=0; i<v; i++){
       cx.fillRect(xBarra + i*seg + 1.5, y+4, seg-3, 9);
     }
-
+ 
     cx.fillStyle = VERDE;
     cx.font = 'bold 16px "Courier New",monospace';
     cx.fillText(String(v).padStart(2,' '), xBarra + anchoBarra + 10, y);
-
+ 
     y += 26;
   });
-
+ 
   // pie
   cx.strokeStyle = TENUE; cx.lineWidth = 1;
   cx.beginPath(); cx.moveTo(28,H-48); cx.lineTo(W-28,H-48); cx.stroke();
-
+ 
   cx.font = '13px "Courier New",monospace';
   if(estado.paso === 'final'){
     cx.fillStyle = AMBAR;
@@ -505,20 +505,20 @@ function dibujarPantalla(){
     cx.fillStyle = TENUE;
     cx.fillText('Puntos por asignar: ' + puntosLibres(), 28, H-38);
   }
-
+ 
   // scanlines dentro de la textura
   cx.fillStyle = 'rgba(0,0,0,0.13)';
   for(let i=0; i<H; i+=4) cx.fillRect(0,i,W,2);
-
+ 
   actualizarTextura();
 }
-
+ 
 let texturaLista = false;
 function actualizarTextura(){
   const plano = document.getElementById('pantalla-pipboy');
   const mesh = plano && plano.getObject3D('mesh');
   if(!mesh || !mesh.material) return;
-
+ 
   if(!texturaLista){
     const tex = new AFRAME.THREE.CanvasTexture(cv);
     tex.colorSpace = AFRAME.THREE.SRGBColorSpace ?? tex.colorSpace;
@@ -528,27 +528,27 @@ function actualizarTextura(){
   }
   mesh.material.map.needsUpdate = true;   // ← esta es la línea mágica
 }
-
+ 
 function rolDe(e){
   let mejor = STATS[0].k;
   STATS.forEach(s=>{ if(e.stats[s.k] > e.stats[mejor]) mejor = s.k; });
   return ROLES[mejor];
 }
-
-
+ 
+ 
 /* ══════════════════════════════════════════════════════════
    2b. VENTANA CON ESQUINAS REDONDEADAS
    Mismo truco que la pantalla del Pip-Boy: un canvas oculto hace
    de textura. Acá, en vez de dibujar texto, el canvas recorta el
    video con un camino de esquinas redondeadas antes de pintarlo.
    ══════════════════════════════════════════════════════════ */
-
+ 
 const RADIO_VENTANA = 32;         // px de curvatura — ajustá a gusto
 const cvVentana = document.createElement('canvas');
 cvVentana.width = 400;
 cvVentana.height = 258;           // misma proporción que el a-plane (0.85 × 0.55)
 const cxVentana = cvVentana.getContext('2d');
-
+ 
 function rutaRedondeada(ctx, w, h, r){
   ctx.beginPath();
   ctx.moveTo(r, 0);
@@ -562,7 +562,7 @@ function rutaRedondeada(ctx, w, h, r){
   ctx.arcTo(0, 0, r, 0, r);
   ctx.closePath();
 }
-
+ 
 let texturaVentanaLista = false;
 function dibujarVentana(){
   const w = cvVentana.width, h = cvVentana.height;
@@ -572,11 +572,11 @@ function dibujarVentana(){
   cxVentana.clip();                                   // todo lo pintado después queda recortado
   cxVentana.drawImage(video, 0, 0, w, h);
   cxVentana.restore();
-
+ 
   const plano = document.getElementById('ventana');
   const mesh = plano && plano.getObject3D('mesh');
   if(!mesh || !mesh.material) return;                 // el mesh aún no existe, reintenta el próximo frame
-
+ 
   if(!texturaVentanaLista){
     const tex = new AFRAME.THREE.CanvasTexture(cvVentana);
     mesh.material.map = tex;
@@ -585,7 +585,7 @@ function dibujarVentana(){
   }
   mesh.material.map.needsUpdate = true;
 }
-
+ 
 // el video cambia cada frame, así que esto corre en loop —
 // pero solo mientras el target está a la vista (ver sección 4)
 let loopVentana = null;
@@ -601,12 +601,12 @@ function detenerLoopVentana(){
   if(loopVentana) cancelAnimationFrame(loopVentana);
   loopVentana = null;
 }
-
-
+ 
+ 
 /* ══════════════════════════════════════════════════════════
    3. PANELES 2D
    ══════════════════════════════════════════════════════════ */
-
+ 
 const paneles = {
   sexo:    document.getElementById('paso-sexo'),
   nombre:  document.getElementById('paso-nombre'),
@@ -615,19 +615,19 @@ const paneles = {
 };
 const avisoBuscando = document.getElementById('buscando');
 let targetVisible = false;
-
+ 
 function mostrarPaso(p){
   estado.paso = p;
   Object.entries(paneles).forEach(([k,el])=> el.classList.toggle('oculto', k !== p));
   avisoBuscando.classList.add('oculto');
   dibujarPantalla();
 }
-
+ 
 function ocultarTodo(){
   Object.values(paneles).forEach(el=> el.classList.add('oculto'));
   avisoBuscando.classList.remove('oculto');
 }
-
+ 
 // construir las filas de stats una sola vez
 const lista = document.getElementById('lista-stats');
 STATS.forEach(s=>{
@@ -641,7 +641,7 @@ STATS.forEach(s=>{
     '<button data-mas="'+s.k+'" aria-label="Subir '+s.nombre+'">+</button>';
   lista.appendChild(fila);
 });
-
+ 
 function refrescarStats(){
   const libres = puntosLibres();
   document.getElementById('num-puntos').textContent = libres;
@@ -658,14 +658,14 @@ function refrescarStats(){
   document.getElementById('confirmar-stats').disabled = false;
   dibujarPantalla();
 }
-
+ 
 lista.addEventListener('click', e=>{
   const mas = e.target.dataset.mas, menos = e.target.dataset.menos;
   if(mas && puntosLibres() > 0 && estado.stats[mas] < MAX) estado.stats[mas]++;
   if(menos && estado.stats[menos] > MIN) estado.stats[menos]--;
   if(mas || menos){ sonido.masMenos(); refrescarStats(); }
 });
-
+ 
 document.getElementById('aleatorio').addEventListener('click', ()=>{
   sonido.click();
   STATS.forEach(s=> estado.stats[s.k] = BASE);
@@ -676,14 +676,14 @@ document.getElementById('aleatorio').addEventListener('click', ()=>{
   }
   refrescarStats();
 });
-
+ 
 document.getElementById('reiniciar-stats').addEventListener('click', ()=>{
   sonido.click();
   STATS.forEach(s=> estado.stats[s.k] = BASE);
   refrescarStats();
 });
-
-
+ 
+ 
 /* ── paso 1: sexo ── */
 paneles.sexo.addEventListener('click', e=>{
   const s = e.target.dataset.sexo;
@@ -692,11 +692,11 @@ paneles.sexo.addEventListener('click', e=>{
   estado.sexo = s;
   mostrarPaso('nombre');
 });
-
+ 
 /* ── paso 2: nombre ── */
 const modal = document.getElementById('modal-nombre');
 const campo = document.getElementById('campo-nombre');
-
+ 
 document.getElementById('abrir-nombre').addEventListener('click', ()=>{
   sonido.click();
   modal.classList.add('visible');
@@ -708,7 +708,7 @@ document.getElementById('cancelar-nombre').addEventListener('click', ()=>{
 });
 document.getElementById('guardar-nombre').addEventListener('click', guardarNombre);
 campo.addEventListener('keydown', e=>{ if(e.key === 'Enter') guardarNombre(); });
-
+ 
 function guardarNombre(){
   sonido.click();
   const v = campo.value.trim().replace(/\s+/g,' ');
@@ -718,24 +718,24 @@ function guardarNombre(){
   mostrarPaso('special');
   refrescarStats();
 }
-
+ 
 document.getElementById('saltar-nombre').addEventListener('click', ()=>{
   sonido.click();
   estado.nombre = designacionAuto();
   mostrarPaso('special');
   refrescarStats();
 });
-
+ 
 function designacionAuto(){
   return 'HAB-' + String(Math.floor(Math.random()*900)+100);
 }
-
+ 
 /* ── paso 3 → 4 ── */
 document.getElementById('confirmar-stats').addEventListener('click', ()=>{
   sonido.confirmar();
   estado.numero = siguienteNumero();
   mostrarPaso('final');
-
+ 
   const rol = rolDe(estado);
   document.getElementById('titulo-final').textContent = estado.nombre;
   document.getElementById('texto-final').textContent =
@@ -743,7 +743,7 @@ document.getElementById('confirmar-stats').addEventListener('click', ()=>{
     'Clasificación asignada: ' + rol + '. ' +
     'Tu cápsula criogénica está lista.';
 });
-
+ 
 /* ── paso 4: tema y tarjeta ── */
 document.getElementById('selector-tema').addEventListener('click', e=>{
   const t = e.target.dataset.tema;
@@ -751,7 +751,7 @@ document.getElementById('selector-tema').addEventListener('click', e=>{
   sonido.click();
   aplicarTema(t);
 });
-
+ 
 document.getElementById('descargar-tarjeta').addEventListener('click', ()=>{
   sonido.click();
   const archivo = 'refugio111-' + (estado.nombre || 'habitante')
@@ -764,14 +764,14 @@ document.getElementById('descargar-tarjeta').addEventListener('click', ()=>{
   enlace.click();
   enlace.remove();
 });
-
+ 
 document.getElementById('otro-habitante').addEventListener('click', ()=>{
   sonido.click();
   reiniciarEstado();
   refrescarStats();
   mostrarPaso('sexo');
 });
-
+ 
 /* contador de habitantes registrados en este dispositivo */
 function siguienteNumero(){
   let n = 1;
@@ -781,16 +781,16 @@ function siguienteNumero(){
   }catch(err){ n = Math.floor(Math.random()*400)+1; }
   return String(n).padStart(3,'0');
 }
-
-
+ 
+ 
 /* ══════════════════════════════════════════════════════════
    4. ENGANCHE CON EL AR
    ══════════════════════════════════════════════════════════ */
-
+ 
 const target = document.getElementById('target');
 const video  = document.getElementById('vid-ventana');
 let sonoBienvenida = false;
-
+ 
 target.addEventListener('targetFound', ()=>{
   targetVisible = true;
   video.play().catch(()=>{});          // iOS a veces lo rechaza; no rompe nada
@@ -799,19 +799,19 @@ target.addEventListener('targetFound', ()=>{
   mostrarPaso(estado.paso);
   if(estado.paso === 'special') refrescarStats();
 });
-
+ 
 target.addEventListener('targetLost', ()=>{
   targetVisible = false;
   video.pause();
   detenerLoopVentana();                // no seguir dibujando si no se ve
   if(!modal.classList.contains('visible')) ocultarTodo();
 });
-
+ 
 // primer dibujo en cuanto la escena esté lista
 const escena = document.querySelector('a-scene');
 if(escena.hasLoaded) dibujarPantalla();
 else escena.addEventListener('loaded', dibujarPantalla);
-
+ 
 aplicarTema(estado.tema);   // colores iniciales (CSS + canvas) y swatch activo
 refrescarStats();
 ocultarTodo();

@@ -1,0 +1,161 @@
+:root{
+    --fosforo:#2fe664;
+    --fosforo-tenue:#1a8a3e;
+    --ambar:#ffb642;
+    --fondo:#04120a;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+
+  html,body{
+    margin:0; padding:0; overflow:hidden;
+    font-family:"Courier New",Courier,monospace;
+  }
+
+  /* ---------- CAPA 2D SOBRE LA CÁMARA ---------- */
+  /* pointer-events:none deja pasar los toques a la escena AR.
+     Solo los controles reales lo reactivan. */
+  #ui{
+    position:fixed; inset:0; z-index:10;
+    pointer-events:none;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:14px;
+    color:var(--fosforo);
+    text-shadow:0 0 6px rgba(47,230,100,.55);
+  }
+
+  /* scanlines y viñeteado: pura decoración CSS, cero peso */
+  #ui::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.18) 3px,
+      rgba(0,0,0,.18) 4px
+    );
+    mix-blend-mode:multiply;
+  }
+  #ui::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,.65) 100%);
+  }
+
+  .panel{
+    pointer-events:auto;
+    position:relative; z-index:2;
+    background:rgba(4,18,10,.93);
+    border:2px solid var(--fosforo-tenue);
+    border-radius:4px;
+    padding:16px 14px 14px;
+    box-shadow:0 0 22px rgba(47,230,100,.22), inset 0 0 32px rgba(47,230,100,.07);
+    animation:flicker 4.2s infinite;
+  }
+
+  @keyframes flicker{
+    0%,97%,100%{opacity:1}
+    98%{opacity:.93}
+    99%{opacity:.98}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .panel{animation:none}
+  }
+
+  .panel h2{
+    margin:0 0 4px;
+    font-size:17px; font-weight:700; letter-spacing:.5px;
+  }
+  .panel p.sub{
+    margin:0 0 14px;
+    font-size:12px; color:var(--fosforo-tenue);
+    text-shadow:none; line-height:1.4;
+  }
+
+  /* ---------- BOTONES ---------- */
+  .btn{
+    font-family:inherit; font-size:15px; font-weight:700;
+    color:var(--fosforo);
+    background:rgba(47,230,100,.07);
+    border:2px solid var(--fosforo);
+    border-radius:3px;
+    padding:13px 16px;
+    cursor:pointer;
+    text-shadow:0 0 6px rgba(47,230,100,.5);
+    transition:background .12s, color .12s;
+    width:100%;
+  }
+  .btn:active{background:var(--fosforo); color:var(--fondo); text-shadow:none;}
+  .btn:focus-visible{outline:3px solid var(--ambar); outline-offset:2px;}
+  .btn.secundario{border-color:var(--fosforo-tenue); color:var(--fosforo-tenue); font-size:13px; padding:10px;}
+  .btn.secundario.activo{background:var(--fosforo); color:var(--fondo); text-shadow:none;}
+
+  .fila{display:flex; gap:10px;}
+  .fila .btn{flex:1;}
+
+  /* ---------- STATS S.P.E.C.I.A.L. ---------- */
+  #puntos-restantes{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13px; margin-bottom:10px;
+    border-bottom:1px solid var(--fosforo-tenue); padding-bottom:8px;
+  }
+  #puntos-restantes b{font-size:22px; color:var(--ambar); text-shadow:0 0 8px rgba(255,182,66,.6);}
+
+  .stat{
+    display:grid; grid-template-columns:22px 1fr 34px 34px 34px;
+    align-items:center; gap:8px;
+    padding:5px 0;
+  }
+  .stat .letra{
+    font-size:17px; font-weight:700; color:var(--ambar);
+    text-align:center;
+  }
+  .stat .nombre{font-size:12px; letter-spacing:.4px;}
+  .stat .valor{
+    font-size:19px; font-weight:700; text-align:center;
+  }
+  .stat button{
+    font-family:inherit; font-size:19px; font-weight:700; line-height:1;
+    width:34px; height:34px;
+    color:var(--fosforo); background:transparent;
+    border:2px solid var(--fosforo-tenue); border-radius:3px;
+    cursor:pointer;
+  }
+  .stat button:active{background:var(--fosforo); color:var(--fondo);}
+  .stat button:disabled{opacity:.25; cursor:default;}
+  .stat button:focus-visible{outline:2px solid var(--ambar); outline-offset:1px;}
+
+  /* ---------- MODAL DEL NOMBRE ---------- */
+  /* pantalla completa: el teclado del móvil tapa la cámara igual,
+     así que mejor ocultarla del todo mientras escribe */
+  #modal-nombre{
+    position:fixed; inset:0; z-index:40;
+    background:var(--fondo);
+    display:none;
+    flex-direction:column; justify-content:center;
+    padding:26px;
+    color:var(--fosforo);
+  }
+  #modal-nombre.visible{display:flex;}
+  #modal-nombre label{font-size:13px; color:var(--fosforo-tenue); display:block; margin-bottom:10px;}
+  #campo-nombre{
+    font-family:inherit; font-size:24px; font-weight:700;
+    width:100%; padding:12px 10px;
+    color:var(--fosforo); background:rgba(47,230,100,.05);
+    border:none; border-bottom:2px solid var(--fosforo);
+    text-shadow:0 0 8px rgba(47,230,100,.5);
+    margin-bottom:8px;
+  }
+  #campo-nombre:focus{outline:none; background:rgba(47,230,100,.1);}
+  #contador-nombre{font-size:11px; color:var(--fosforo-tenue); margin-bottom:24px;}
+
+  /* ---------- AVISO DE BÚSQUEDA DE TARGET ---------- */
+  #buscando{
+    pointer-events:none; position:relative; z-index:2;
+    align-self:center; margin-bottom:auto; margin-top:auto;
+    text-align:center; font-size:14px; line-height:1.6;
+    background:rgba(4,18,10,.8); border:1px solid var(--fosforo-tenue);
+    padding:16px 22px; border-radius:4px;
+  }
+  #buscando .icono{font-size:30px; display:block; margin-bottom:8px;}
+
+  .oculto{display:none !important;}

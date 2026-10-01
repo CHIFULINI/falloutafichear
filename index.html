@@ -28,28 +28,40 @@
 
   <a-entity id="target" mindar-image-target="targetIndex: 0">
 
+    <!-- LOGO VAULT-TEC SOBRE EL MARCADOR -->
+    <a-entity id="logo-vault-tec"
+      gltf-model="./logovaultec.glb"
+      position="0 2.35 0.08"
+      scale="0.35 0.35 0.35"></a-entity>
+
+    <!-- BITBOY SOBRE LA VENTANA, EN EL LADO IZQUIERDO -->
+    <a-entity id="bitboy"
+      gltf-model="./bitboy.glb"
+      position="-1.5 1.55 0.08"
+      scale="0.35 0.35 0.35"></a-entity>
+
     <!-- VENTANA AL REFUGIO (izquierda del cartel) -->
     <!-- es un a-plane, no a-video: el video se dibuja en un canvas
          recortado con esquinas redondeadas, y ese canvas es la textura -->
     <a-plane id="ventana"
-          position="-2.3 0 0.02"
+          position="-1.5 0 0.02"
       width="2.625" height="1.7"
       rotation="0 18 0"
       material="shader: flat; transparent: true"></a-plane>
 
     <!-- marco de la ventana -->
-        <a-plane position="-2.3 0 0.01" width="2.825" height="1.9" rotation="0 18 0"
+        <a-plane position="-1.5 0 0.01" width="2.825" height="1.9" rotation="0 18 0"
       color="#0c2a17" material="shader: flat"></a-plane>
 
     <!-- PANTALLA DEL PIP-BOY (derecha del cartel) -->
     <a-plane id="pantalla-pipboy"
-          position="2.3 0 0.02"
+          position="1.5 0 0.02"
       width="2.125" height="1.65"
       rotation="0 -18 0"
       material="shader: flat; transparent: true"></a-plane>
 
     <!-- carcasa detrás de la pantalla -->
-        <a-plane position="2.3 0 0.01" width="2.375" height="1.9" rotation="0 -18 0"
+        <a-plane position="1.5 0 0.01" width="2.375" height="1.9" rotation="0 -18 0"
       color="#132a19" material="shader: flat"></a-plane>
 
   </a-entity>
